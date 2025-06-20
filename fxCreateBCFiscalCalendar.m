@@ -4,6 +4,15 @@
 // Generates a calendar table with BC fiscal year data
 // between a given StartDate and EndDate, including
 // Month Name and Day Name columns.
+//
+// INSTRUCTIONS:
+// 1. Open Power Query Editor in Excel or Power BI.
+// 2. Go to "Home" > "New Source" > "Blank Query".
+// 3. Open the "Advanced Editor".
+// 4. Delete any existing code and paste this entire block.
+// 5. Rename the query to: fxCreateBCFiscalCalendar.
+// 6. Invoke the function by entering your desired StartDate and EndDate.
+//    Example: fxCreateBCFiscalCalendar(#date(2020, 1, 1), #date(2025, 12, 31))
 // ================================================
 
 (StartDate as date, EndDate as date) as table =>
