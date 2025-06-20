@@ -1,3 +1,4 @@
+
 // Minor update to force github commit
 // ================================================
 // FUNCTION: fxCreateBCFiscalCalendar
@@ -5,6 +6,9 @@
 // Generates a calendar table with BC fiscal year data
 // between a given StartDate and EndDate, including
 // Month Name and Day Name columns.
+
+// between a given StartDate and EndDate.
+
 //
 // INSTRUCTIONS:
 // 1. Open Power Query Editor in Excel or Power BI.
@@ -27,12 +31,16 @@ let
     AddMonth = Table.AddColumn(AddYear, "Month", each Date.Month([Date]), Int64.Type),
     AddDay = Table.AddColumn(AddMonth, "Day", each Date.Day([Date]), Int64.Type),
 
+
     // Add Month Name and Day Name
     AddMonthName = Table.AddColumn(AddDay, "MonthName", each Date.ToText([Date], "MMMM")),
     AddDayName = Table.AddColumn(AddMonthName, "DayName", each Date.ToText([Date], "dddd")),
 
     // Add fiscal year logic (BC fiscal year starts in April)
     AddFiscalYear = Table.AddColumn(AddDayName, "FiscalYear", each if [Month] > 3 then [Year] + 1 else [Year]),
+    // Add fiscal year logic (BC fiscal year starts in April)
+    AddFiscalYear = Table.AddColumn(AddDay, "FiscalYear", each if [Month] > 3 then [Year] + 1 else [Year]),
+
     AddFiscalYearText = Table.AddColumn(AddFiscalYear, "FiscalYearName", each "FY" & Text.End(Text.From([FiscalYear]), 2)),
 
     // Add FiscalYearName_2: "YY/YY" format
@@ -59,7 +67,11 @@ let
     // Reorder columns to show FiscalYear first
     Reordered = Table.ReorderColumns(RemoveMonthAbbrev, {
         "Date", "FiscalYear", "FiscalYearName", "FiscalYearName_2", "FiscalYearName_3",
+
         "PeriodName", "FiscalQuarter", "Year", "Month", "MonthName", "Day", "DayName"
+=======
+        "PeriodName", "FiscalQuarter", "Year", "Month", "Day"
+
     })
 in
     Reordered
